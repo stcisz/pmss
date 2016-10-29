@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Progressive Moon Sabian Symbol</title>
+<style>
+
+	h1 {
+		font: monospaced;
+	}
+
+	#results {
+		margin: 20px;
+	}
+	
+	#prev_degr, #cur_degr, #next_degr {
+		width: 50px;
+		font-weight: bold;
+		font-family: Sans;
+		font-size: 14px;
+	}
+	
+	#date1, #date2 {
+		font-style: italic;
+		padding-left: 25px;
+		font-family: Sans;
+		font-size: 12px;
+	}
+
+	#prev_symbol, #cur_symbol, #next_symbol {
+		text-transform: lowercase;
+		font-size: 18px;
+		font-family: Sans;
+	}
+	
+	#prev_symbol:first-letter, #cur_symbol:first-letter, #next_symbol:first-letter {
+		text-transform: uppercase;
+	}
+
+</style>
+</head>
+<body>
+<h1>Progressive Moon Sabian Symbol</h1>
+<p>Fill the form below to compute sabian symbol of the Moon in secundary progression.</p>
+<table>
+<tr>
+	    			<td>Month:</td>
+					<td>
+						<select id="s_month" onchange="redraw()">
+							<option>January</option>
+							<option>February</option>
+							<option>March</option>
+							<option>April</option>
+							<option>May</option>
+							<option>June</option>
+							<option>July</option>
+							<option>August</option>
+							<option>September</option>
+							<option>October</option>
+							<option>November</option>
+							<option>December</option>
+						</select>					
+					</td>				
+	   				<td>Date:</td>
+					<td>
+						<select id="s_date_1" onchange="redraw()">
+							<option> </option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+						</select>
+						<select id="s_date_2" onchange="redraw()">
+							<option>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+						</select>			
+					</td>
+					<td>Year:</td>
+					<td>
+						<select id="s_year_1" onchange="redraw()">
+							<option>19</option>
+							<option>20</option>
+						</select>
+						<select id="s_year_2" onchange="redraw()">
+							<option>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+						</select>
+						<select id="s_year_3" onchange="redraw()">
+							<option>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+						</select>
+					</td>
+	     		</tr>
+				<tr>
+					<td>Time:</td>
+					<td colspan="3">
+						<select id="s_hour_1" onchange="redraw()">
+							<option> </option>
+							<option>1</option>
+							<option>2</option>
+						</select>								
+						<select id="s_hour_2" onchange="redraw()">
+							<option>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+						</select>								
+						:
+						<select id="s_minute_1" onchange="redraw()">
+							<option>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</select>								
+						<select id="s_minute_2" onchange="redraw()">
+							<option>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+						</select>								
+					</td>
+					<td>Zone:</td>
+					<td>
+						<select id="s_zone" onchange="redraw()">
+							<option>GMT -12</option>
+							<option>GMT -11</option>
+							<option>GMT -10</option>
+							<option>GMT -9</option>
+							<option>GMT -8</option>
+							<option>GMT -7</option>
+							<option>GMT -6</option>
+							<option>GMT -5</option>
+							<option>GMT -4</option>
+							<option>GMT -3</option>
+							<option>GMT -2</option>
+							<option>GMT -1</option>
+							<option>GMT</option>
+							<option>GMT +1</option>
+							<option>GMT +2</option>
+							<option>GMT +3</option>
+							<option>GMT +4</option>
+							<option>GMT +5</option>
+							<option>GMT +6</option>
+							<option>GMT +7</option>
+							<option>GMT +8</option>
+							<option>GMT +9</option>
+							<option>GMT +10</option>
+							<option>GMT +11</option>
+							<option>GMT +12</option>
+							<option>GMT +13</option>
+							<option>GMT +14</option>
+						</select> :
+						<select id="s_zone_fraq" onchange="redraw()">
+							<option>00</option>
+							<option>15</option>
+							<option>30</option>
+							<option>45</option>
+						</select>
+					</td>
+				</tr>
+</table>
+<table id="results">
+	<tr>
+		<td id="prev_degr"></td>
+		<td id="prev_symbol"></td>
+	</tr>
+	<tr>
+		<td id="date1" colspan="2"></td>
+	</tr>
+	<tr>
+		<td id="cur_degr"></td>
+		<td id="cur_symbol"></td>
+	</tr>
+	<tr>
+		<td id="date2" colspan="2"></td>
+	</tr>
+	<tr>
+		<td id="next_degr"></td>
+		<td id="next_symbol"></td>
+	</tr>
+</table>
+</body>
+<script type="text/javascript">
+	var sabian = [];
+
+	sabian[1] = "A WOMAN HAS RISEN OUT OF THE OCEAN, A SEAL IS EMBRACING HER."
+	sabian[2] = "A COMEDIAN ENTERTAINING THE GROUP."
+	sabian[3] = "A CAMEO PROFILE OF A MAN IN THE OUTLINE OF HIS COUNTRY."
+	sabian[4] = "TWO LOVERS STROLLING THROUGH A SECLUDED WALK."
+	sabian[5] = "A TRIANGLE WITH WINGS."
+	sabian[6] = "A SQUARE BRIGHTLY LIGHTED ON ONE SIDE."
+	sabian[7] = "A MAN SUCCESSFULLY EXPRESSING HIMSELF IN TWO REALMS AT ONCE."
+	sabian[8] = "A WOMAN'S HAT WITH STREAMERS BLOWN BY THE EAST WIND."
+	sabian[9] = "A CRYSTAL GAZER."
+	sabian[10] = "A TEACHER GIVES NEW SYMBOLIC FORMS TO TRADITIONAL IMAGES."
+	sabian[11] = "THE RULER OF A NATION."
+	sabian[12] = "A FLOCK OF WILD GEESE."
+	sabian[13] = "A BOMB WHICH FAILED TO EXPLODE IS NOW SAFELY CONCEALED."
+	sabian[14] = "A SERPENT COILING NEAR A MAN AND A WOMAN."
+	sabian[15] = "AN INDIAN WEAVING A BLANKET."
+	sabian[16] = "BROWNIES DANCING IN THE SETTING SUN."
+	sabian[17] = "TWO PRIM SPINSTERS SITTING TOGETHER IN SILENCE."
+	sabian[18] = "AN EMPTY HAMMOCK."
+	sabian[19] = "THE MAGIC CARPET OF ORIENTAL IMAGERY."
+	sabian[20] = "A YOUNG GIRL FEEDING BIRDS IN WINTER."
+	sabian[21] = "A PUGILIST (BOXER) ENTERING THE RING."
+	sabian[22] = "THE GATE TO THE GARDEN OF ALL FULFILLED DESIRES."
+	sabian[23] = "A WOMAN IN PASTEL COLORS CARRYING A HEAVY AND VALUABLE BUT VEILED LOAD."
+	sabian[24] = "AN OPEN WINDOW AND A NET CURTAIN BLOWING INTO A CORNUCOPIA."
+	sabian[25] = "A DOUBLE PROMISE REVEALS ITS INNER AND OUTER MEANINGS."
+	sabian[26] = "A MAN POSSESSED OF MORE GIFTS THAN HE CAN HOLD."
+	sabian[27] = "THROUGH IMAGINATION, A LOST OPPORTUNITY IS REGAINED."
+	sabian[28] = "A LARGE DISAPPOINTED AUDIENCE."
+	sabian[29] = "THE MUSIC OF THE SPHERES."
+	sabian[30] = "A DUCK POND AND ITS BROOD."
+
+
+	sabian[31] = "A CLEAR MOUNTAIN STREAM."
+	sabian[32] = "AN ELECTRICAL STORM."
+	sabian[33] = "STEPS UP TO A LAWN BLOOMING WITH CLOVER."
+	sabian[34] = "THE POT OF GOLD AT THE END OF THE RAINBOW."
+	sabian[35] = "A WIDOW AT AN OPEN GRAVE."
+	sabian[36] = "A BRIDGE BEING BUILT ACROSS A GORGE."
+	sabian[37] = "A WOMAN OF SAMARIA COMES TO DRAW WATER FROM THE WELL."
+	sabian[38] = "A SLEIGH WITHOUT SNOW."
+	sabian[39] = "A CHRISTMAS TREE DECORATED."
+	sabian[40] = "A RED CROSS NURSE."
+	sabian[41] = "A WOMAN SPRINKLING FLOWERS."
+	sabian[42] = "A YOUNG COUPLE WALK DOWN MAIN- STREET, WINDOW-SHOPPING."
+	sabian[43] = "A PORTER CARRYING HEAVY BAGGAGE."
+	sabian[44] = "ON THE BEACH, CHILDREN PLAY WHILE SHELLFISH GROPE AT THE EDGE OF THE WATER."
+	sabian[45] = "A MAN WITH RAKISH SILK HAT, MUFFLED AGAINST THE COLD, BRAVES A STORM."
+	sabian[46] = "AN OLD TEACHER FAILS TO INTEREST HIS PUPILS IN TRADITIONAL KNOWLEDGE."
+	sabian[47] = "A SYMBOLICAL BATTLE BETWEEN 'SWORDS' AND 'TORCHES'."
+	sabian[48] = "A WOMAN AIRING AN OLD BAG THROUGH A SUNNY WINDOW."
+	sabian[49] = "A NEW CONTINENT RISING OUT OF THE OCEAN."
+	sabian[50] = "WISPS OF CLOUDS, LIKE WINGS, ARE STREAMING ACROSS THE SKY."
+	sabian[51] = "MOVING FINGER POINTS TO SIGNIFICANT PASSAGES IN A BOOK."
+	sabian[52] = "WHITE DOVE FLYING OVER TROUBLED WATERS."
+	sabian[53] = "A JEWELLERY SHOP FILLED WITH THE MOST MAGNIFICENT JEWELS."
+	sabian[54] = "AN INDIAN WARRIOR RIDING FIERCELY, HUMAN SCALPS HANGING AT HIS BELT."
+	sabian[55] = "A LARGE WELL-KEPT PUBLIC PARK."
+	sabian[56] = "A SPANIARD SERENADING HIS SENORITA."
+	sabian[57] = "AN OLD INDIAN WOMAN SELLING BEADS."
+	sabian[58] = "A MATURE WOMAN REAWAKENED TO ROMANCE."
+	sabian[59] = "TWO COBBLERS WORKING AT A TABLE."
+	sabian[60] = "A PEACOCK PARADING ON THE TERRACE OF AN OLD CASTLE."
+
+
+	sabian[61] = "A GLASS-BOTTOMED BOAT REVEALS UNDER-SEA WONDERS."
+	sabian[62] = "SANTA CLAUSE FILLING STOCKINGS FURTIVELY."
+	sabian[63] = "THE GARDEN OF THE TUILERIES IN PARIS."
+	sabian[64] = "HOLLY AND MISTLETOE BRING CHRISTMAS SPIRIT TO A HOME."
+	sabian[65] = "A RADICAL MAGAZINE, ASKING FOR ACTION, DISPLAYS A SENSATIONAL FRONT PAGE."
+	sabian[66] = "WORKMEN DRILLING FOR OIL."
+	sabian[67] = "AN OLD-FASHIONED WELL."
+	sabian[68] = "AROUSED STRIKERS ROUND A FACTORY."
+	sabian[69] = "A QUIVER FILLED WITH ARROWS."
+	sabian[70] = "AEROPLANE PERFORMING A NOSE-DIVE."
+	sabian[71] = "NEWLY OPENED LANDS OFFER THE PIONEER NEW OPPORTUNITIES FOR EXPERIENCE."
+	sabian[72] = "A BLACK SLAVE-GIRL DEMANDS HER RIGHTS OF HER MISTRESS."
+	sabian[73] = "WORLD FAMOUS PIANIST GIVING A CONCERT PERFORMANCE."
+	sabian[74] = "TWO PEOPLE, LIVING FAR APART, IN TELEPATHIC COMMUNICATION."
+	sabian[75] = "TWO DUTCH CHILDREN TALKING."
+	sabian[76] = "A WOMAN ACTIVIST IN AN EMOTIONAL SPEECH, DRAMATIZING HER CAUSE."
+	sabian[77] = "THE HEAD OF A ROBUST YOUTH CHANGES INTO THAT OF A MATURE THINKER."
+	sabian[78] = "TWO CHINESE MEN TALKING CHINESE (IN A WESTERN CROWD)."
+	sabian[79] = "A LARGE ARCHAIC VOLUME REVEALS A TRADITIONAL WISDOM."
+	sabian[80] = "A CAFETERIA WITH AN ABUNDANCE OF CHOICES."
+	sabian[81] = "A TUMULTUOUS LABOR DEMONSTRATION."
+	sabian[82] = "DANCING COUPLES CROWD THE BARN IN A HARVEST FESTIVAL."
+	sabian[83] = "THREE FLEDGLINGS IN A NEST HIGH IN A TREE."
+	sabian[84] = "CHILDREN SKATING ON ICE."
+	sabian[85] = "A GARDENER TRIMMING LARGE PALM TREES."
+	sabian[86] = "WINTER FROST IN THE WOODS."
+	sabian[87] = "A YOUNG GYPSY EMERGING FROM THE WOODS GAZES AT FAR CITIES."
+	sabian[88] = "SOCIETY GRANTING BANKRUPTCY TO HIM, A MAN LEAVES THE COURT."
+	sabian[89] = "THE FIRST MOCKINGBIRD OF SPRING SINGS FROM THE TREE TOP."
+	sabian[90] = "A PARADE OF BATHING BEAUTIES BEFORE LARGE BEACH CROWDS."
+
+
+	sabian[91] = "ON A SHIP THE SAILORS LOWER AN OLD FLAG AND RAISE A NEW ONE."
+	sabian[92] = "A MAN ON A MAGIC CARPET OBSERVES VAST VISTAS BELOW HIM."
+	sabian[93] = "AN ARCTIC EXPLORER LEADS A REINDEER THROUGH ICY CANYONS."
+	sabian[94] = "A CAT ARGUING WITH A MOUSE."
+	sabian[95] = "AT A RAILROAD CROSSING, AN AUTOMOBILE IS WRECKED BY A TRAIN."
+	sabian[96] = "GAME BIRDS FEATHERING THEIR NESTS."
+	sabian[97] = "TWO FAIRIES (NATURE SPIRITS) DANCING ON A MOONLIT NIGHT."
+	sabian[98] = "A GROUP RABBITS DRESSED IN CLOTHES AND ON PARADE."
+	sabian[99] = "A SMALL, NAKED GIRL BENDS OVER A POND TRYING TO CATCH A FISH."
+	sabian[100] = "A LARGE DIAMOND IN THE FIRST STAGES OF THE CUTTING PROCESS."
+	sabian[101] = "A CLOWN CARICATURING WELL-KNOWN PERSONALITIES."
+	sabian[102] = "A CHINESE WOMAN NURSING A BABY WHOSE AURA REVEALS HIM TO BE THE REINCARNATION OF A GREAT TEACHER."
+	sabian[103] = "ONE HAND SLIGHTLY FLEXED WITH A VERY PROMINENT THUMB."
+	sabian[104] = "A VERY OLD MAN FACING A VAST DARK SPACE TO THE NORTHEAST."
+	sabian[105] = "A GROUP OF PEOPLE WHO HAVE OVEREATEN AND ENJOYED IT."
+	sabian[106] = "A MAN STUDYING A MANDALA IN FRONT OF HIM, WITH THE HELP OF A VERY ANCIENT BOOK."
+	sabian[107] = "THE SEED GROWS INTO KNOWLEDGE AND LIFE."
+	sabian[108] = "A HEN SCRATCHING FOR HER CHICKS."
+	sabian[109] = "A PRIEST PERFORMING A MARRIAGE CEREMONY."
+	sabian[110] = "VENETIAN GONDOLIERS IN A SERENADE."
+	sabian[111] = "A PRIMA DONNA SINGING."
+	sabian[112] = "A YOUNG WOMAN AWAITING A SAILBOAT."
+	sabian[113] = "THE MEETING OF A LITERARY SOCIETY."
+	sabian[114] = "A WOMAN AND TWO MEN CASTAWAYS ON A SMALL ISLAND OF THE SOUTH SEAS."
+	sabian[115] = "A LEADER OF MEN WRAPPED IN AN INVISIBLE MANTLE OF POWER."
+	sabian[116] = "GUESTS ARE READING IN THE LIBRARY OF A LUXURIOUS HOME."
+	sabian[117] = "A VIOLENT STORM IN A CANYON FILLED WITH EXPENSIVE HOMES."
+	sabian[118] = "INDIAN GIRL INTRODUCES COLLEGE BOY-FRIEND TO HER ASSEMBLED TRIBE."
+	sabian[119] = "A GREEK MUSE WEIGHING NEW BORN TWINS IN GOLDEN SCALES."
+	sabian[120] = "A DAUGHTER OF THE AMERICAN REVOLUTION."
+
+
+	sabian[121] = "UNDER EMOTIONAL STRESS, BLOOD RUSHES TO A MAN'S HEAD."
+	sabian[122] = "AN EPIDEMIC OF MUMPS."
+	sabian[123] = "A MATURE WOMAN, KEEPING UP WITH THE TIMES, HAVING HER HAIR BOBBED."
+	sabian[124] = "A MAN FORMALLY DRESSED STANDS NEAR TROPHIES HE BROUGHT BACK FROM A HUNTING EXPEDITION."
+	sabian[125] = "ROCK FORMATIONS TOWER OVER A DEEP CANYON."
+	sabian[126] = "AN OLD FASHIONED 'CONSERVATIVE' WOMAN IS CONFRONTED BY AN UP-TO-DATE GIRL."
+	sabian[127] = "THE CONSTELLATIONS OF STARS IN THE SKY."
+	sabian[128] = "GLASS BLOWERS SHAPE BEAUTIFUL VASES WITH THEIR CONTROLLED BREATHING."
+	sabian[129] = "A COMMUNIST ACTIVIST SPREADING HIS REVOLUTIONARY IDEALS."
+	sabian[130] = "EARLY MORNING DEW."
+	sabian[131] = "CHILDREN ON A SWING IN A HUGE OAK TREE."
+	sabian[132] = "AN EVENING LAWN PARTY OF ADULTS."
+	sabian[133] = "AN OLD SEA CAPTAIN ROCKING ON THE PORCH OF HIS COTTAGE."
+	sabian[134] = "CHERUB-LIKE, A HUMAN SOUL WHISPERS, SEEKING TO MANIFEST."
+	sabian[135] = "A PAGEANT MOVING ALONG A STREET PACKED WITH PEOPLE."
+	sabian[136] = "BRILLIANT SUNSHINE JUST AFTER A STORM."
+	sabian[137] = "VOLUNTEER CHURCH CHOIR MAKES SOCIAL EVENT OF REHEARSAL."
+	sabian[138] = "A CHEMIST CONDUCTS AN EXPERIMENT FOR HIS STUDENTS."
+	sabian[139] = "A HOUSEBOAT PARTY."
+	sabian[140] = "AMERICAN INDIANS PERFORM A RITUAL TO THE SUN."
+	sabian[141] = "INTOXICATED CHICKENS DIZZILY FLAP THEIR WINGS TRYING TO FLY."
+	sabian[142] = "A CARRIER PIGEON FULFILLING ITS MISSION."
+	sabian[143] = "A BAREBACK RIDER IN A CIRCUS DISPLAYS HER DANGEROUS SKILL."
+	sabian[144] = "TOTALLY CONCENTRATED UPON INNER SPIRITUAL ATTAINMENT, A MAN IS SITTING IN A STATE OF COMPLETE NEGLECT OF HIS BODY."
+	sabian[145] = "A LARGE CAMEL CROSSING A VAST AND FORBIDDING DESERT."
+	sabian[146] = "AFTER A HEAVY STORM, A RAINBOW."
+	sabian[147] = "DAYBREAK - THE LUMINESCENCE OF DAWN IN THE EASTERN SKY."
+	sabian[148] = "MANY LITTLE BIRDS ON THE LIMB OF A LARGE TREE."
+	sabian[149] = "A MERMAID EMERGES FROM THE OCEAN READY FOR REBIRTH IN HUMAN FORM."
+	sabian[150] = "AN UNSEALED LETTER."
+
+
+	sabian[151] = "IN A PORTRAIT THE BEST OF A MAN'S FEATURES AND TRAITS ARE IDEALIZED."
+	sabian[152] = "A LARGE WHITE CROSS-DOMINATING THE LANDSCAPE-STANDS ALONE ON TOP OF A HIGH HILL."
+	sabian[153] = "TWO GUARDIAN ANGELS BRINGING PROTECTION."
+	sabian[154] = "BLACK AND WHITE CHILDREN PLAYING HAPPILY TOGETHER."
+	sabian[155] = "A MAN BECOMING AWARE OF NATURE SPIRITS AND NORMALLY UNSEEN SPIRITUAL ENERGIES."
+	sabian[156] = "A MERRY-GO-ROUND."
+	sabian[157] = "A HAREM."
+	sabian[158] = "A GIRL TAKES HER FIRST DANCING INSTRUCTION."
+	sabian[159] = "A EXPRESSIONIST PAINTER MAKING A FUTURISTIC DRAWING."
+	sabian[160] = "TWO HEADS LOOKING OUT AND BEYOND THE SHADOWS."
+	sabian[161] = "A BOY MOULDED IN HIS MOTHER'S ASPIRATIONS FOR HIM."
+	sabian[162] = "A BRIDE WITH HER VEIL SNATCHED AWAY."
+	sabian[163] = "A POWERFUL STATESMAN OVERCOMES A STATE OF POLITICAL HYSTERIA."
+	sabian[164] = "A FAMILY TREE."
+	sabian[165] = "A FINE LACE ORNAMENTAL HANDKERCHIEF."
+	sabian[166] = "CHILDREN CROWD AROUND THE ORANG-UTANG CAGE IN A ZOO."
+	sabian[167] = "A VOLCANIC ERUPTION."
+	sabian[168] = "TWO GIRLS PLAYING WITH A OUIJA BOARD."
+	sabian[169] = "A SWIMMING RACE."
+	sabian[170] = "A CARAVAN OF CARS HEADED FOR PROMISED LANDS."
+	sabian[171] = "A GIRL'S BASKETBALL TEAM."
+	sabian[172] = "A ROYAL COAT OF ARMS ENRICHED WITH PRECIOUS STONES."
+	sabian[173] = "A LION-TAMER RUSHES FEARLESSLY INTO THE CIRCUS ARENA."
+	sabian[174] = "MARY AND HER WHITE LAMB."
+	sabian[175] = "A FLAG AT HALF-MAST IN FRONT OF A PUBLIC BUILDING."
+	sabian[176] = "A BOY WITH A CENSER SERVES NEAR THE PRIEST AT THE ALTAR."
+	sabian[177] = "ARISTOCRATIC ELDERLY LADIES DRINKING AFTERNOON TEA IN A WEALTHY HOME."
+	sabian[178] = "A BALD-HEADED MAN WHO HAS SEIZED POWER."
+	sabian[179] = "A MAN GAINING SECRET KNOWLEDGE FROM AN ANCIENT SCROLL HE IS READING."
+	sabian[180] = "HAVING AN URGENT TASK TO COMPLETE, A MAN DOESN'T LOOK TO ANY DISTRACTIONS."
+
+
+	sabian[181] = "A BUTTERFLY PRESERVED AND MADE PERFECT WITH A DART THROUGH IT."
+	sabian[182] = "THE LIGHT OF THE SIXTH RACE TRANSMUTED TO THE SEVENTH."
+	sabian[183] = "THE DAWN OF A NEW DAY REVEALS EVERYTHING CHANGED."
+	sabian[184] = "A GROUP OF YOUNG PEOPLE SIT IN SPIRITUAL COMMUNION AROUND A CAMPFIRE."
+	sabian[185] = "A MAN TEACHING THE TRUE INNER KNOWLEDGE OF THE NEW WORLD TO HIS STUDENTS."
+	sabian[186] = "A MAN WATCHES HIS IDEALS TAKING A CONCRETE FORM BEFORE HIS INNER VISION."
+	sabian[187] = "A WOMAN FEEDING CHICKENS AND PROTECTING THEM FROM THE HAWKS."
+	sabian[188] = "A BLAZING FIREPLACE IN A DESERTED HOME."
+	sabian[189] = "THREE OLD MASTERS HANGING IN A SPECIAL ROOM IN AN ART GALLERY."
+	sabian[190] = "A CANOE APPROACHING SAFETY THROUGH DANGEROUS WATERS."
+	sabian[191] = "A PROFESSOR PEERING OVER HIS GLASSES AT HIS STUDENTS."
+	sabian[192] = "MINERS ARE EMERGING FROM A DEEP COAL MINE."
+	sabian[193] = "CHILDREN BLOWING SOAP BUBBLES."
+	sabian[194] = "IN THE HEAT OF THE NOON, A MAN TAKES A SIESTA."
+	sabian[195] = "CIRCULAR PATHS."
+	sabian[196] = "AFTER A STORM, A BOAT LANDING STANDS IN NEED OF RECONSTRUCTION."
+	sabian[197] = "A RETIRED SEA CAPTAIN WATCHES SHIPS ENTERING AND LEAVING THE HARBOUR."
+	sabian[198] = "TWO MEN PLACED UNDER ARREST."
+	sabian[199] = "A GANG OF ROBBERS IN HIDING."
+	sabian[200] = "A JEWISH RABBI PERFORMING HIS DUTIES."
+	sabian[201] = "A CROWD UPON A BEACH."
+	sabian[202] = "A CHILD GIVING BIRDS A DRINK AT A FOUNTAIN."
+	sabian[203] = "CHANTICLEER'S VOICE HERALDS THE RISING SUN WITH EXUBERANT TONES."
+	sabian[204] = "A THIRD WING ON THE LEFT SIDE OF A BUTTERFLY."
+	sabian[205] = "THE SIGHT OF AN AUTUMN LEAF BRINGS TO A PILGRIM THE SUDDEN REVELATION OF THE MYSTERY OF LIFE AND DEATH."
+	sabian[206] = "AN EAGLE AND A LARGE WHITE DOVE TURNING INTO EACH OTHER."
+	sabian[207] = "AN AIRPLANE SAILS, HIGH IN THE CLEAR SKY."
+	sabian[208] = "A MAN IN DEEP GLOOM; UNNOTICED, ANGELS COME TO HIS HELP."
+	sabian[209] = "MANKIND'S VAST ENDURING EFFORT TO REACH FOR KNOWLEDGE TRANSFERABLE FROM GENERATION TO GENERATION; KNOWLEDGE."
+	sabian[210] = "THREE MOUNDS OF KNOWLEDGE ON A PHILOSOPHER'S HEAD."
+
+
+	sabian[211] = "A SIGHT-SEEING BUS FILLED WITH TOURISTS."
+	sabian[212] = "A BROKEN BOTTLE AND SPILLED PERFUME."
+	sabian[213] = "NEIGHBOURS HELP IN A HOUSE- RAISING PARTY IN A SMALL VILLAGE."
+	sabian[214] = "A YOUTH HOLDING A LIGHTED CANDLE IN A DEVOTIONAL RITUAL."
+	sabian[215] = "A MASSIVE, ROCKY SHORE RESISTS THE POUNDING OF THE SEA."
+	sabian[216] = "A GOLD RUSH TEARS MEN AWAY FROM THEIR NATIVE SOIL."
+	sabian[217] = "DEEP-SEA DIVERS."
+	sabian[218] = "THE MOON SHINING ACROSS A LAKE."
+	sabian[219] = "A DENTIST AT WORK."
+	sabian[220] = "A FELLOWSHIP SUPPER REUNITES OLD COMRADES."
+	sabian[221] = "A DROWNING MAN IS BEING RESCUED."
+	sabian[222] = "AN OFFICIAL EMBASSY BALL."
+	sabian[223] = "AN INVENTOR PERFORMS A LABORATORY EXPERIMENT."
+	sabian[224] = "TELEPHONE LINEMEN AT WORK INSTALLING NEW CONNECTIONS."
+	sabian[225] = "CHILDREN PLAYING AROUND FIVE MOUNDS OF SAND."
+	sabian[226] = "A GIRL'S FACE BREAKING INTO A SMILE."
+	sabian[227] = "A WOMAN, FILLED WITH HER OWN SPIRIT, IS THE FATHER OF HER OWN CHILD."
+	sabian[228] = "A PATH THROUGH WOODS RICH IN AUTUMN COLORING."
+	sabian[229] = "A PARROT LISTENING AND THEN TALKING, REPEATS A CONVERSATION HE HAS OVERHEARD."
+	sabian[230] = "A WOMAN DRAWING ASIDE TWO DARK CURTAINS THAT CLOSED THE ENTRANCE TO A SACRED PATHWAY."
+	sabian[231] = "OBEYING HIS CONSCIENCE, A SOLDIER RESISTS ORDERS."
+	sabian[232] = "HUNTERS SHOOTING WILD DUCKS."
+	sabian[233] = "A RABBIT METAMORPHOSED INTO A FAIRY (NATURE SPIRIT)."
+	sabian[234] = "CROWDS COMING DOWN THE MOUNTAIN TO LISTEN TO ONE INSPIRED MAN."
+	sabian[235] = "AN X RAY PHOTOGRAPH."
+	sabian[236] = "INDIANS MAKING CAMP (IN NEW TERRITORY)."
+	sabian[237] = "A MILITARY BAND MARCHES NOISILY ON THROUGH THE CITY STREETS."
+	sabian[238] = "THE KING OF THE FAIRIES APPROACHING HIS DOMAIN."
+	sabian[239] = "AN INDIAN WOMAN PLEADING TO THE CHIEF FOR THE LIVES OF HER CHILDREN."
+	sabian[240] = "CHILDREN IN HALLOWEEN COSTUMES INDULGING IN VARIOUS PRANKS."
+
+
+	sabian[241] = "RETIRED ARMY VETERANS GATHER TO REAWAKEN OLD MEMORIES."
+	sabian[242] = "THE OCEAN COVERED WITH WHITECAPS."
+	sabian[243] = "TWO MEN PLAYING CHESS."
+	sabian[244] = "A LITTLE CHILD LEARNING TO WALK."
+	sabian[245] = "AN OLD OWL UP IN A TREE."
+	sabian[246] = "A GAME OF CRICKET."
+	sabian[247] = "CUPID KNOCKING AT THE DOOR OF A HUMAN HEART."
+	sabian[248] = "DEEP WITHIN THE DEPTHS OF THE EARTH, NEW ELEMENTS ARE BEING FORMED."
+	sabian[249] = "A MOTHER LEADS HER SMALL CHILD STEP BY STEP UP THE STAIRS."
+	sabian[250] = "A THEATRICAL REPRESENTATION OF A GOLDEN HAIRED 'GODDESS OF OPPORTUNITY'."
+	sabian[251] = "THE LAMP OF PHYSICAL ENLIGHTENMENT AT THE LEFT TEMPLE."
+	sabian[252] = "A FLAG THAT TURNS INTO AN EAGLE THAT CROWS."
+	sabian[253] = "A WIDOW'S PAST IS BROUGHT TO LIGHT."
+	sabian[254] = "THE PYRAMIDS AND THE SPHINX."
+	sabian[255] = "THE GROUND HOG LOOKING FOR ITS SHADOW ON GROUND HOG DAY."
+	sabian[256] = "SEA GULLS FLY AROUND A SHIP LOOKING FOR FOOD."
+	sabian[257] = "AN EASTER SUNRISE SERVICE."
+	sabian[258] = "TINY CHILDREN IN SUNBONNETS."
+	sabian[259] = "PELICANS, DISTURBED BY THE GARBAGE OF PEOPLE MOVE THEIR YOUNG TO A NEW HABITAT."
+	sabian[260] = "IN WINTER PEOPLE CUTTING ICE FROM A FROZEN POND, FOR SUMMER USE."
+	sabian[261] = "A CHILD AND A DOG WEARING BORROWED EYEGLASSES."
+	sabian[262] = "A CHINESE LAUNDRY."
+	sabian[263] = "IMMIGRANTS ENTERING A NEW COUNTRY."
+	sabian[264] = "A BLUEBIRD STANDING AT THE DOOR OF THE HOUSE."
+	sabian[265] = "A CHUBBY BOY ON A HOBBYHORSE."
+	sabian[266] = "A FLAG-BEARER IN A BATTLE."
+	sabian[267] = "THE SCULPTOR'S VISION IS TAKING FORM."
+	sabian[268] = "AN OLD BRIDGE OVER A BEAUTIFUL STREAM IN CONSTANT USE."
+	sabian[269] = "A FAT BOY MOWING THE LAWN."
+	sabian[270] = "THE POPE BLESSING THE FAITHFUL."
+
+
+	sabian[271] = "AN INDIAN CHIEF CLAIMS POWER FROM THE ASSEMBLED TRIBE."
+	sabian[272] = "THREE STAINED-GLASS WINDOWS IN A GOTHIC CHURCH, ONE DAMAGED BY WAR."
+	sabian[273] = "THE HUMAN SOUL, IN ITS EAGERNESS FOR NEW EXPERIENCES, SEEKS EMBODIMENT."
+	sabian[274] = "A GROUP OF PEOPLE ENTERING A LARGE CANOE FOR A JOURNEY BY WATER."
+	sabian[275] = "INDIANS - SOME ROWING A CANOE AND OTHERS DANCING A WAR DANCE IN IT."
+	sabian[276] = "TEN LOGS LIE UNDER AN ARCHWAY LEADING TO DARKER WOODS."
+	sabian[277] = "A VEILED PROPHET SPEAKS, SEIZED BY THE POWER OF A GOD."
+	sabian[278] = "BIRDS IN THE HOUSE SINGING HAPPILY."
+	sabian[279] = "AN ANGEL CARRYING A HARP."
+	sabian[280] = "AN ALBATROSS FEEDING FROM THE HAND OF A SAILOR."
+	sabian[281] = "PHEASANTS DISPLAY THEIR BRILLIANT COLORS ON A PRIVATE ESTATE."
+	sabian[282] = "A STUDENT OF NATURE LECTURING REVEALING LITTLE-KNOWN ASPECTS OF LIFE."
+	sabian[283] = "A FIRE WORSHIPPER MEDITATES ON THE ULTIMATE REALITIES OF EXISTENCE."
+	sabian[284] = "AN ANCIENT BAS-RELIEF CARVED IN GRANITE REMAINS A WITNESS TO A LONG- FORGOTTEN CULTURE."
+	sabian[285] = "IN A HOSPITAL, THE CHILDREN'S WARD IS FILLED WITH TOYS."
+	sabian[286] = "SCHOOL GROUNDS FILLED WITH BOYS AND GIRLS IN GYMNASIUM SUITS."
+	sabian[287] = "A GIRL SURREPTITIOUSLY BATHING IN THE NUDE."
+	sabian[288] = "THE UNION JACK FLIES FROM A NEW BRITISH WARSHIP."
+	sabian[289] = "A CHILD OF ABOUT FIVE CARRYING A HUGE SHOPPING BAG FILLED WITH GROCERIES."
+	sabian[290] = "A HIDDEN CHOIR SINGING DURING A RELIGIOUS SERVICE."
+	sabian[291] = "A RELAY RACE."
+	sabian[292] = "A GENERAL ACCEPTING DEFEAT GRACEFULLY."
+	sabian[293] = "A SOLDIER RECEIVING TWO AWARDS FOR BRAVERY IN COMBAT."
+	sabian[294] = "A WOMAN ENTERING A CONVENT."
+	sabian[295] = "AN ORIENTAL RUG DEALER IN A STORE FILLED WITH PRECIOUS ORNAMENTAL RUGS."
+	sabian[296] = "A NATURE SPIRIT DANCING IN THE MIST OF A WATERFALL."
+	sabian[297] = "A MOUNTAIN PILGRIMAGE."
+	sabian[298] = "A LARGE AVIARY."
+	sabian[299] = "A WOMAN READING TEA LEAVES."
+	sabian[300] = "DIRECTORS OF A LARGE FIRM MEET IN SECRET CONFERENCE."
+
+
+	sabian[301] = "AN OLD ADOBE MISSION."
+	sabian[302] = "AN UNEXPECTED THUNDERSTORM."
+	sabian[303] = "A DESERTER FROM THE NAVY."
+	sabian[304] = "A HINDU HEALER."
+	sabian[305] = "A COUNCIL OF ANCESTORS."
+	sabian[306] = "A MASKED FIGURE PERFORMS RITUALISTIC ACTS IN A MYSTERY PLAY."
+	sabian[307] = "A CHILD BORN OUT OF AN EGGSHELL."
+	sabian[308] = "BEAUTIFULLY GOWNED WAX FIGURES ON DISPLAY."
+	sabian[309] = "A FLAG IS SEEN TURNING INTO AN EAGLE."
+	sabian[310] = "A POPULARITY THAT PROVES TO BE FLEETING."
+	sabian[311] = "DURING A SILENT HOUR, A MAN RECEIVES A NEW INSPIRATION WHICH MAY CHANGE HIS LIFE."
+	sabian[312] = "PEOPLE ON A VAST STAIRCASE, GRADUATED UPWARDS."
+	sabian[313] = "A BAROMETER."
+	sabian[314] = "A TRAIN ENTERING A TUNNEL."
+	sabian[315] = "TWO LOVEBIRDS SITTING ON A FENCE AND SINGING HAPPILY."
+	sabian[316] = "A BIG-BUSINESSMAN AT HIS DESK."
+	sabian[317] = "A WATCHDOG STANDING GUARD, PROTECTING HIS MASTER AND HIS POSSESSIONS."
+	sabian[318] = "A MAN BEING UNMASKED AT A MASQUERADE."
+	sabian[319] = "A FOREST FIRE QUENCHED."
+	sabian[320] = "A LARGE WHITE DOVE BEARING A MESSAGE."
+	sabian[321] = "A WOMAN DISAPPOINTED AND DISILLUSIONED, COURAGEOUSLY FACING A SEEMINGLY EMPTY LIFE."
+	sabian[322] = "A RUG PLACED ON A FLOOR FOR CHILDREN TO PLAY ON."
+	sabian[323] = "A BIG BEAR SITTING DOWN AND WAVING ALL ITS PAWS."
+	sabian[324] = "A MAN TURNING HIS BACK ON HIS PASSIONS TEACHES DEEP WISDOM FROM HIS EXPERIENCE."
+	sabian[325] = "A BUTTERFLY WITH THE RIGHT WING MORE PERFECTLY FORMED."
+	sabian[326] = "A GARAGE MAN TESTING A CAR'S BATTERY WITH A HYDROMETER."
+	sabian[327] = "AN ANCIENT POTTERY BOWL FILLED WITH FRESH VIOLETS."
+	sabian[328] = "A TREE FELLED AND SAWED TO ENSURE A SUPPLY OF WOOD FOR THE WINTER."
+	sabian[329] = "BUTTERFLY EMERGING FROM A CHRYSALIS."
+	sabian[330] = "MOON-LIT FIELDS, ONCE BABYLON, ARE BLOOMING WHITE."
+
+
+	sabian[331] = "A CROWDED PUBLIC MARKET PLACE."
+	sabian[332] = "A SQUIRREL HIDING FROM HUNTERS."
+	sabian[333] = "A PETRIFIED FOREST."
+	sabian[334] = "HEAVY CAR TRAFFIC ON A NARROW ISTHMUS LINKING TWO SEASIDE RESORTS."
+	sabian[335] = "A CHURCH BAZAAR."
+	sabian[336] = "A PARADE OF ARMY OFFICERS IN FULL DRESS."
+	sabian[337] = "ILLUMINATED BY A SHAFT OF LIGHT, A LARGE CROSS LIES ON ROCKS SURROUNDED BY SEA AND MIST."
+	sabian[338] = "A GIRL BLOWING A BUGLE."
+	sabian[339] = "THE RACE BEGINS: INTENT ON OUTDISTANCING HIS RIVALS, A JOCKEY SPURS HIS HORSE TO GREAT SPEED."
+	sabian[340] = "AN AVIATOR IN THE CLOUDS."
+	sabian[341] = "MEN TRAVELLING A NARROW PATH, SEEKING ILLUMINATION."
+	sabian[342] = "AN EXAMINATION OF INITIATES IN THE SANCTUARY OF AN OCCULT BROTHERHOOD."
+	sabian[343] = "A SWORD, USED IN MANY BATTLES, IN A MUSEUM."
+	sabian[344] = "A LADY WRAPPED IN FOX FUR."
+	sabian[345] = "AN OFFICER DRILLING HIS MEN IN A SIMULATED ATTACK."
+	sabian[346] = "IN A QUITE MOMENT, A CREATIVE INDIVIDUAL EXPERIENCES THE FLOW OF INSPIRATION."
+	sabian[347] = "AN EASTER PROMENADE."
+	sabian[348] = "IN A HUGE TENT A FAMOUS REVIVALIST CONDUCTS HIS MEETING WITH A SPECTACULAR PERFORMANCE."
+	sabian[349] = "A MASTER INSTRUCTING HIS DISCIPLE."
+	sabian[350] = "A TABLE SET FOR AN EVENING MEAL."
+	sabian[351] = "A LITTLE WHITE LAMB, A CHILD AND A CHINESE SERVANT."
+	sabian[352] = "A PROPHET BRINGING DOWN THE NEW LAW FROM MOUNT SINAI."
+	sabian[353] = "A 'MATERIALIZING MEDIUM' GIVING A SEANCE."
+	sabian[354] = "AN INHABITED ISLAND."
+	sabian[355] = "THE PURGING OF THE PRIESTHOOD."
+	sabian[356] = "A NEW MOON REVEALS THAT IT'S TIME FOR PEOPLE TO GO AHEAD WITH THEIR DIFFERENT PROJECTS."
+	sabian[357] = "A HARVEST MOON ILLUMINATES THE SKY."
+	sabian[358] = "A FERTILE GARDEN UNDER THE FULL MOON."
+	sabian[359] = "LIGHT BREAKING INTO MANY COLORS AS IT PASSES THROUGH A PRISM."
+	sabian[360] = "A MAJESTIC ROCK FORMATION RESEMBLING A FACE IS IDEALIZED BY A BOY WHO TAKES IT AS HIS IDEAL OF GREATNESS, AND AS HE GROWS UP, BEGINS TO LOOK LIKE IT."
+
+
+			dataLong = [
+			0,	0,	1,	0,	6288774,
+			2,	0,	-1,	0,	1274027,
+			2,	0,	0,	0,	658314,
+			0,	0,	2,	0,	213618,
+			0,	1,	0,	0,	-185116,
+			0,	0,	0,	2,	-114332,
+			2,	0,	-2,	0,	58793,
+			2,	-1,	-1,	0,	57066,
+			2,	0,	1,	0,	53322,
+			2,	-1,	0,	0,	45758,
+			0,	1,	-1,	0,	-40923,
+			1,	0,	0,	0,	-34720,
+			0,	1,	1,	0,	-30383,
+			2,	0,	0,	-2,	15327,
+			0,	0,	1,	2,	-12528,
+			0,	0,	1,	-2,	10980,
+			4,	0,	-1,	0,	10675,
+			0,	0,	3,	0,	10034,
+			4,	0,	-2,	0,	8548,
+			2,	1,	-1,	0,	-7888,
+			2,	1,	0,	0,	-6766,
+			1,	0,	-1,	0,	-5163,
+			1,	1,	0,	0,	4987,
+			2,	-1,	1,	0,	4036,
+			2,	0,	2,	0,	3994,
+			4,	0,	0,	0,	3861,
+			2,	0,	-3,	0,	3665,
+			0,	1,	-2,	0,	-2689,
+			2,	0,	-1,	2,	-2602,
+			2,	-1,	-2,	0,	2390,
+			1,	0,	1,	0,	-2348,
+			2,	-2,	0,	0,	2236,
+			0,	1,	2,	0,	-2120,
+			0,	2,	0,	0,	-2069,
+			2,	-2,	-1,	0,	2048,
+			2,	0,	1,	-2,	-1773,
+			2,	0,	0,	2,	-1595,
+			4,	-1,	-1,	0,	1215,
+			0,	0,	2,	2,	-1110,
+			3,	0,	-1,	0,	-892,
+			2,	1,	1,	0,	-810,
+			4,	-1,	-2,	0,	759,
+			0,	2,	-1,	0,	-713,
+			2,	2,	-1,	0,	-700,
+			2,	1,	-2,	0,	691,
+			2,	-1,	0,	-2,	596,
+			4,	0,	1,	0,	549,
+			0,	0,	4,	0,	537,
+			4,	-1,	0,	0,	520,
+			1,	0,	-2,	0,	-487,
+			2,	1,	0,	-2,	-399,
+			0,	0,	2,	-2,	-381,
+			1,	1,	1,	0,	351,
+			3,	0,	-2,	0,	-340,
+			4,	0,	-3,	0,	330,
+			2,	-1,	2,	0,	327,
+			0,	2,	1,	0,	-323,
+			1,	1,	-1,	0,	299,
+			2,	0,	3,	0,	294
+			]
+
+			function julianDay(Y,M,D,h,z,m) {
+				JD = 367 * Y - Math.floor(7*(Y + Math.floor((M + 9) / 12)) / 4) + Math.floor(275 * M / 9) + D- 730531.5
+				T = h/24 -z/24 + m/(60 * 24);
+				return JD + T;
+			}
+			
+			function round(x) {
+				v = x % 360;
+				return v < 0 ? v + 360: v;
+			}
+			
+			
+			
+			function moonPos(jdate) {
+				T = jdate / 36525
+				T2 = T*T
+				T3 = T*T*T
+				T4 = T*T*T*T
+				var LPrim = round(218.3164591 + 481267.88134236 * T - 0.0013268 * T2 +
+							T3 / 538841 - T4 / 65194000);
+				var D = round(297.8502042 + 445267.1115168 * T - 0.00163 * T2 + 
+						T3 / 545868 - T4 / 113065000);
+				var M = round(357.5291092 + 35999.0502909 * T - 0.0001536 * T2 +
+						 T3 / 24490000);
+				var MPrim = round(134.9634114 + 477198.8676313 * T + 0.008997 * T2 + 
+						T3 / 69699 - T4 / 14712000);
+				var F = round(93.2720993 + 483202.0175273 * T - 0.0034029 * T2 + 
+						T3 / 3526000 - T4 / 863310000);
+				var A1 = round(119.75 + 131.849 * T);
+				var A2 = round(53.09 + 479264.29 * T);
+				var E = 1 - 0.002516 * T - 0.0000074 * T2;
+				var E2 = E * E;
+				var LSum = 0
+				for (var i = 0; i < 59 * 5; i+= 5) {
+					arg = D * dataLong[i] + M * dataLong[i+1] + MPrim * dataLong[i+2] + dataLong[i+3] * F
+					_sin = Math.sin(arg * Math.PI / 180);
+					if (Math.abs(dataLong[i+1]) == 1) {
+						_sin *= E;
+					}
+					if (Math.abs(dataLong[i+1]) == 2) {
+						_sin *= E2;
+					}
+					LSum += dataLong[i+ 4] * _sin
+				}
+				LSum += 3958 * Math.sin(A1 * Math.PI / 180) +
+						1962 * Math.sin((LPrim - F) * Math.PI / 180) +
+						318 * Math.sin(A2 * Math.PI /180);
+				L = round(LPrim + LSum / 1000000);
+				return L;
+			}
+			
+			function sign(x) {
+				return x < 0 ? -1 : 1;
+			}
+			
+			
+			function show(lon) {
+				var signs = ['AR','TA','GE','CN','LE','VI','LI','SC','SG','CP','AQ','PI'];
+				var pos = (lon + 360) % 360;
+				var sign = signs[Math.floor(pos / 30)];
+				var pos_d = pos % 30;
+				var min = Math.floor((pos - Math.floor(pos)) * 60)
+				return Math.floor(pos_d) + sign + (min < 10 ? '0' : '') + min;
+			}
+
+			
+			function getDate(xp, x0, val) {
+				var x1 = x0;
+				var x2 = x0 + 0.01;
+				for (var i = 0; i < 100; i++) {
+					var x1prog = xp + (x1 - xp) / 365.248193724;
+					var x2prog = xp + (x2 - xp) / 365.248193724;
+					var y1 = moonPos(x1prog) - val;
+					var y2 = moonPos(x2prog) - val; 
+					if (y1 < -180) y1 += 360;
+					if (y1 > 180) y1 -= 360;
+					if (y2 < -180) y2 += 360;
+					if (y2 > 180) y2 -= 360;
+					var t = x2 + (-y2) *  (x2 - x1) / (y2 - y1);
+					x1 = x2;
+					x2 = t;
+					if (Math.abs(y2) < 0.0000001) break;
+				}
+				return Math.floor(x2 * (24 * 60 * 60 * 1000));
+			}
+			
+			function redraw() {
+				var save = [];
+				var month1 = document.getElementById('s_month').selectedIndex;
+				var month = month1 + 1;
+				save.push(month1);
+				var date1 = document.getElementById('s_date_1').selectedIndex; 
+				var date2 = document.getElementById('s_date_2').selectedIndex;
+				save.push(date1,date2);
+				var date = 10 * date1 + date2;
+				var year1 = document.getElementById('s_year_1').selectedIndex;
+				var year2 = document.getElementById('s_year_2').selectedIndex;
+				var year3 = document.getElementById('s_year_3').selectedIndex;
+				save.push(year1,year2,year3);
+				var year = (19 + year1) * 100 + year2 * 10 + year3;
+				var hour1 = document.getElementById('s_hour_1').selectedIndex;
+				var hour2 = document.getElementById('s_hour_2').selectedIndex;
+				save.push(hour1,hour2);
+				var hour = 10 * hour1 + hour2;
+				var minutes1 = document.getElementById('s_minute_1').selectedIndex;
+				var minutes2 = document.getElementById('s_minute_2').selectedIndex;
+				save.push(minutes1,minutes2);
+				var minutes = 10 * minutes1 + minutes2
+				var zone1 = document.getElementById('s_zone').selectedIndex;
+				var zone2 = document.getElementById('s_zone_fraq').selectedIndex;
+				save.push(zone1,zone2);
+				var zone = zone1 - 12 + sign(zone1 - 12) * zone2 * 15.0/60.0;
+				
+				window.localStorage.save = save.join(",");
+				
+				var jdate1 = julianDay(year,month,date,hour,zone,minutes);
+ 				var day = new Date();
+ 				var jdate2 = julianDay(day.getFullYear(),day.getMonth()+1,day.getDate(),day.getHours(),-day.getTimezoneOffset()/60,day.getMinutes())
+ 				var jdateProgr = jdate1 + (jdate2 - jdate1) / 365.248193724;
+ 				var moon = moonPos(jdateProgr);
+ 				var begin = Math.floor(moon) == 0 ? 360 : Math.floor(moon);
+ 				var cur = Math.ceil(moon);
+ 				var end = (cur == 360) ? 1 : cur + 1; 
+				document.getElementById("prev_degr").innerText = begin;
+				document.getElementById("cur_degr").innerText = cur;
+				document.getElementById("next_degr").innerText = end;
+				document.getElementById("prev_symbol").innerText = sabian[begin];
+				document.getElementById("cur_symbol").innerText = sabian[cur];
+				document.getElementById("next_symbol").innerText = sabian[end];
+				var jd2000 = new Date(2000, 0, 1, 0, 0, 0, 0);
+ 				var beginDate = new Date(getDate(jdate1, jdate2, begin % 360) + jd2000.getTime());
+ 				var endDate = new Date(getDate(jdate1, jdate2, cur % 360) + jd2000.getTime());
+ 				document.getElementById("date1").innerText = beginDate.toString();
+ 				document.getElementById("date2").innerText = endDate.toString();
+			}
+
+			window.onload = function() {
+				var data = [0,0,1, 0,7,0, 0,0,0, 0,12,0];
+				if (window.localStorage.save != undefined) {
+					dataStr = window.localStorage.save.split(",")
+					data = []
+					for (var i = 0; i < 12; i++) {
+						data.push(parseInt(dataStr[i]));
+					}
+				}
+				document.getElementById('s_month').selectedIndex = data[0];
+				document.getElementById('s_date_1').selectedIndex = data[1]; 
+				document.getElementById('s_date_2').selectedIndex = data[2];
+				document.getElementById('s_year_1').selectedIndex = data[3];
+				document.getElementById('s_year_2').selectedIndex = data[4];
+				document.getElementById('s_year_3').selectedIndex = data[5];
+				document.getElementById('s_hour_1').selectedIndex = data[6];
+				document.getElementById('s_hour_2').selectedIndex = data[7];
+				document.getElementById('s_minute_1').selectedIndex = data[8];
+				document.getElementById('s_minute_2').selectedIndex = data[9];
+				document.getElementById('s_zone').selectedIndex = data[10];
+				document.getElementById('s_zone_fraq').selectedIndex = data[11];
+				redraw();
+			}
+			
+</script>
+
+</html>
