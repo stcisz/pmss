@@ -5,12 +5,33 @@
 <title>Progressive Moon Sabian Symbol</title>
 <style>
 
-	h1 {
-		font: monospaced;
+	#setbirth {
+		position: absolute;
+		top: 10px;
+		left:10px;
 	}
-
+	
+	#birthday {
+		position: absolute;
+		top: 35px;
+		left: 10px;
+		background-color: #ddd;
+		border-color: #000;
+		overflow: hidden;
+		z-index: 5;
+	}
+	
+	#birthtab {
+		margin: 15px;
+	}
+	
 	#results {
-		margin: 20px;
+		position: absolute;
+		top: 40px;
+		left: 10px;
+		right: 10px;
+		button: 10px;
+		overflow: scroll;
 	}
 	
 	#prev_degr, #cur_degr, #next_degr {
@@ -40,13 +61,13 @@
 </style>
 </head>
 <body>
-<h1>Progressive Moon Sabian Symbol</h1>
-<p>Fill the form below to compute sabian symbol of the Moon in secundary progression.</p>
-<table>
-<tr>
+<input type="button" id="setbirth" value="Set birth day" onclick="openBirth()" />
+<div id="birthday">
+			<table id="birthtab" >
+				<tr>
 	    			<td>Month:</td>
 					<td>
-						<select id="s_month" onchange="redraw()">
+						<select id="s_month" >
 							<option>January</option>
 							<option>February</option>
 							<option>March</option>
@@ -63,13 +84,13 @@
 					</td>				
 	   				<td>Date:</td>
 					<td>
-						<select id="s_date_1" onchange="redraw()">
+						<select id="s_date_1" >
 							<option> </option>
 							<option>1</option>
 							<option>2</option>
 							<option>3</option>
 						</select>
-						<select id="s_date_2" onchange="redraw()">
+						<select id="s_date_2" >
 							<option>0</option>
 							<option>1</option>
 							<option>2</option>
@@ -84,11 +105,11 @@
 					</td>
 					<td>Year:</td>
 					<td>
-						<select id="s_year_1" onchange="redraw()">
+						<select id="s_year_1" >
 							<option>19</option>
 							<option>20</option>
 						</select>
-						<select id="s_year_2" onchange="redraw()">
+						<select id="s_year_2" >
 							<option>0</option>
 							<option>1</option>
 							<option>2</option>
@@ -100,7 +121,7 @@
 							<option>8</option>
 							<option>9</option>
 						</select>
-						<select id="s_year_3" onchange="redraw()">
+						<select id="s_year_3" >
 							<option>0</option>
 							<option>1</option>
 							<option>2</option>
@@ -117,12 +138,12 @@
 				<tr>
 					<td>Time:</td>
 					<td colspan="3">
-						<select id="s_hour_1" onchange="redraw()">
+						<select id="s_hour_1" >
 							<option> </option>
 							<option>1</option>
 							<option>2</option>
 						</select>								
-						<select id="s_hour_2" onchange="redraw()">
+						<select id="s_hour_2" >
 							<option>0</option>
 							<option>1</option>
 							<option>2</option>
@@ -135,7 +156,7 @@
 							<option>9</option>
 						</select>								
 						:
-						<select id="s_minute_1" onchange="redraw()">
+						<select id="s_minute_1" >
 							<option>0</option>
 							<option>1</option>
 							<option>2</option>
@@ -143,7 +164,7 @@
 							<option>4</option>
 							<option>5</option>
 						</select>								
-						<select id="s_minute_2" onchange="redraw()">
+						<select id="s_minute_2" >
 							<option>0</option>
 							<option>1</option>
 							<option>2</option>
@@ -158,7 +179,7 @@
 					</td>
 					<td>Zone:</td>
 					<td>
-						<select id="s_zone" onchange="redraw()">
+						<select id="s_zone" >
 							<option>GMT -12</option>
 							<option>GMT -11</option>
 							<option>GMT -10</option>
@@ -187,7 +208,7 @@
 							<option>GMT +13</option>
 							<option>GMT +14</option>
 						</select> :
-						<select id="s_zone_fraq" onchange="redraw()">
+						<select id="s_zone_fraq" >
 							<option>00</option>
 							<option>15</option>
 							<option>30</option>
@@ -195,7 +216,15 @@
 						</select>
 					</td>
 				</tr>
-</table>
+				<tr>
+					<td colspan="5">
+					</td>
+					<td style="text-align:right;">
+						<input type="button" value="Done" onclick="closeBirth()">
+					</td>
+				</tr>
+			</table>
+</div>
 <table id="results">
 	<tr>
 		<td id="prev_degr"></td>
@@ -802,6 +831,15 @@
  				document.getElementById("date2").innerText = endDate.toString();
 			}
 
+			function openBirth() {
+				document.getElementById("birthday").style.visibility = "visible";
+			}
+			
+			function closeBirth() {
+				document.getElementById("birthday").style.visibility = "hidden";
+				redraw();
+			}
+			
 			window.onload = function() {
 				var data = [0,0,1, 0,7,0, 0,0,0, 0,12,0];
 				if (window.localStorage.save != undefined) {
