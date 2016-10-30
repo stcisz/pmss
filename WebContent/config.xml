@@ -20,6 +20,7 @@
         	Stanisław Ciszewski
         </author>
         
+        <preference name="Orientation" value="landscape"/>
         <preference name="permissions" value="none"/>
         
         <icon src="icon.png"/>
