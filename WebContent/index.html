@@ -825,7 +825,7 @@
 				document.getElementById("prev_symbol").innerText = sabian[begin];
 				document.getElementById("cur_symbol").innerText = sabian[cur];
 				document.getElementById("next_symbol").innerText = sabian[end];
-				var jd2000 = new Date(2000, 0, 1, 0, 0, 0, 0);
+				var jd2000 = new Date(2000, 0, 1, 12, 0, 0, 0);
  				var beginDate = new Date(getDate(jdate1, jdate2, begin % 360) + jd2000.getTime());
  				var endDate = new Date(getDate(jdate1, jdate2, cur % 360) + jd2000.getTime());
  				document.getElementById("date1").innerText = beginDate.toString();
